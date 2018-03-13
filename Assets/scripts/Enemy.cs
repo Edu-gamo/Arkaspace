@@ -6,6 +6,8 @@ public class Enemy : MonoBehaviour {
     
     private float speed = 0.01f;
 
+    public int hp = 1;
+
     // Use this for initialization
     void Start () {
 
