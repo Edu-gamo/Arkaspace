@@ -4,22 +4,9 @@ using UnityEngine;
 
 public class EnergyBall : MonoBehaviour {
 
-    public  Rigidbody2D rig;
     private float speed = 2;
     private float maxSpeed = 4;
-
-    public float velocidadInicial = 600f;
-    bool enJuego;
-
-    private GameObject player;
-
-
-    void Awake() {
-
-        //rig = GetComponent<Rigidbody2D>();
-        
-
-    }
+    private float speedIncrement = 0.1f;
 
     // Use this for initialization
     void Start () {
@@ -33,8 +20,7 @@ public class EnergyBall : MonoBehaviour {
         
 	}
 
-    private void OnCollisionEnter2D(Collision2D other)
-    {
+    private void OnCollisionEnter2D(Collision2D other) {
         if (other.gameObject.tag == "RedEnemy") {
             other.gameObject.GetComponent<RedEnemy>().hp--;
             if (other.gameObject.GetComponent<RedEnemy>().hp <= 0) {
@@ -59,6 +45,20 @@ public class EnergyBall : MonoBehaviour {
             }
             //REBOTA
         }
+        else if (other.gameObject.tag == "Barrier") {
+            Vector2 playerPos = other.gameObject.GetComponentInParent<Transform>().position;
+            Vector2 direction = ((Vector2)this.transform.position - playerPos).normalized;
+            this.GetComponent<Rigidbody2D>().velocity = direction * speed;
+            //REBOTA
+        }
+
+        //Incrementa la velocidad en cada rebote
+        if (speed + speedIncrement < maxSpeed) {
+            speed += speedIncrement;
+        } else {
+            speed = maxSpeed;
+        }
+        this.GetComponent<Rigidbody2D>().velocity = this.GetComponent<Rigidbody2D>().velocity.normalized * speed;
 
         if (other.gameObject.name == "bottom_edge") {
             //PIERDE LA BOLA
