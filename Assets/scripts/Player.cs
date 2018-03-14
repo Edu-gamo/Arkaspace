@@ -14,6 +14,7 @@ public class Player : MonoBehaviour {
 
     private GameObject ball, bar;
 
+    public Text scoreText;
     public int score;
 
     public Slider energySlider;
@@ -55,6 +56,8 @@ public class Player : MonoBehaviour {
 
         //Actualiza la barra de energia
         energySlider.value = energy;
+
+        scoreText.text = score.ToString();
 
     }
 

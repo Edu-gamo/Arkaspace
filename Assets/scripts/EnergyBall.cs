@@ -5,8 +5,8 @@ using UnityEngine;
 public class EnergyBall : MonoBehaviour {
 
     private float speed = 2;
-    private float maxSpeed = 4;
-    private float speedIncrement = 0.1f;
+    private float maxSpeed = 8;
+    private float speedIncrement = 0.15f;
 
     // Use this for initialization
     void Start () {
@@ -26,6 +26,7 @@ public class EnergyBall : MonoBehaviour {
             if (other.gameObject.GetComponent<RedEnemy>().hp <= 0) {
                 Destroy(other.gameObject);
                 FindObjectOfType<Player>().score += 50;
+                FindObjectOfType<Player>().energy += 15;
             }
             //REBOTA
         }
@@ -34,6 +35,7 @@ public class EnergyBall : MonoBehaviour {
             if (other.gameObject.GetComponent<OrangeEnemy>().hp <= 0) {
                 Destroy(other.gameObject);
                 FindObjectOfType<Player>().score += 30;
+                FindObjectOfType<Player>().energy += 10;
             }
             //REBOTA
         }
@@ -42,6 +44,7 @@ public class EnergyBall : MonoBehaviour {
             if (other.gameObject.GetComponent<YellowEnemy>().hp <= 0) {
                 Destroy(other.gameObject);
                 FindObjectOfType<Player>().score += 10;
+                FindObjectOfType<Player>().energy += 5;
             }
             //REBOTA
         }
