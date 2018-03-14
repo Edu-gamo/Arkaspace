@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour {
     
@@ -27,6 +28,10 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+        if(Input.GetKeyDown(KeyCode.Escape))        {
+            SceneManager.LoadScene("Menu");
+        }
 
         //Movimiento lateral de la nave
         this.transform.position = new Vector2(this.transform.position.x + (Input.GetAxis("Horizontal") * speed), this.transform.position.y);
@@ -59,12 +64,8 @@ public class Player : MonoBehaviour {
 
         scoreText.text = score.ToString();
 
-    }
+        if(energy < 20 && !ballState) SceneManager.LoadScene("Menu");
 
-    private void OnCollisionEnter2D (Collision2D other) {
-        if (other.gameObject.tag == "Enemy") {
-            Destroy(other.gameObject);
-        }
     }
 
     IEnumerator BarrierTimer() {

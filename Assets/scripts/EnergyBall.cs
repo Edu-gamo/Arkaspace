@@ -6,7 +6,7 @@ public class EnergyBall : MonoBehaviour {
 
     private float speed = 2;
     private float maxSpeed = 8;
-    private float speedIncrement = 0.15f;
+    private float speedIncrement = 0.25f;
 
     // Use this for initialization
     void Start () {

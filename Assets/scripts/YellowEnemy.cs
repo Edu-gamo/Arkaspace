@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class YellowEnemy : MonoBehaviour {
@@ -22,6 +23,7 @@ public class YellowEnemy : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+        if (this.transform.position.y < -4.25) SceneManager.LoadScene("Menu");
         //Movimiento descendente de la nave
     }
 
