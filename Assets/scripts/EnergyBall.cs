@@ -20,9 +20,21 @@ public class EnergyBall : MonoBehaviour {
 	}
 
     private void OnCollisionEnter2D(Collision2D other) {
-        if (other.gameObject.tag == "Enemy") {
-            other.gameObject.GetComponent<Enemy>().hp--;
-            if (other.gameObject.GetComponent<Enemy>().hp <= 0) {
+        if (other.gameObject.tag == "RedEnemy") {
+            other.gameObject.GetComponent<RedEnemy>().hp--;
+            if (other.gameObject.GetComponent<RedEnemy>().hp <= 0) {
+                Destroy(other.gameObject);
+                FindObjectOfType<Player>().score += 50;
+            }
+        } else if (other.gameObject.tag == "OrangeEnemy") {
+            other.gameObject.GetComponent<OrangeEnemy>().hp--;
+            if (other.gameObject.GetComponent<OrangeEnemy>().hp <= 0) {
+                Destroy(other.gameObject);
+                FindObjectOfType<Player>().score += 30;
+            }
+        } else if (other.gameObject.tag == "YellowEnemy") {
+            other.gameObject.GetComponent<YellowEnemy>().hp--;
+            if (other.gameObject.GetComponent<YellowEnemy>().hp <= 0) {
                 Destroy(other.gameObject);
                 FindObjectOfType<Player>().score += 10;
             }
