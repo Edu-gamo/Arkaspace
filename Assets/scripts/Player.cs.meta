@@ -1,10 +1,14 @@
 fileFormatVersion: 2
 guid: f39f5a87343164445aca011a700df024
-timeCreated: 1520856634
+timeCreated: 1521024419
 licenseType: Free
 MonoImporter:
+  externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - energyBall: {fileID: 1076205378028830, guid: c2e9a7e24886b994fb48ecdfd9827970,
+      type: 2}
+  - barrier: {fileID: 1076205378028830, guid: 80326e8e4025d634ea854ad77853f0cc, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

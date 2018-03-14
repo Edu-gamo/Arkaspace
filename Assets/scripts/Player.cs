@@ -9,8 +9,9 @@ public class Player : MonoBehaviour {
 
     public Object energyBall;
     public Object barrier;
+    public bool barrierState, ballState;
 
-    private GameObject ball;
+    private GameObject ball, bar;
 
     public int score;
 
@@ -21,7 +22,6 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
         //Movimiento lateral de la nave
         this.transform.position = new Vector2(this.transform.position.x + (Input.GetAxis("Horizontal") * speed), this.transform.position.y);
         if(this.transform.position.x > halfWidth) {
@@ -30,10 +30,21 @@ public class Player : MonoBehaviour {
             this.transform.position = new Vector2(-halfWidth, this.transform.position.y);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            ball = (GameObject) Instantiate(energyBall, new Vector2(this.transform.position.x, this.transform.position.y + .5f), Quaternion.identity);
+        
+
+        if (!barrierState && Input.GetAxis("Vertical") < 0) {
+            bar = (GameObject)Instantiate(barrier, new Vector2(this.transform.position.x, this.transform.position.y + .2f), Quaternion.identity);
+            bar.transform.SetParent(this.transform);
+            barrierState = true;
+        } else if(barrierState && Input.GetAxis("Vertical") == 0)  {
+            Destroy(bar);
+            barrierState = false;
         }
 
+        if (!ballState && Input.GetAxis("Vertical") > 0) {
+            ball = (GameObject) Instantiate(energyBall, new Vector2(this.transform.position.x, this.transform.position.y + .5f), Quaternion.identity);
+            ballState = true;
+        }
     }
 
     private void OnCollisionEnter2D (Collision2D other) {
