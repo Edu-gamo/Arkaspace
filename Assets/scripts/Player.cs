@@ -6,20 +6,23 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour {
     
-    private float speed = 0.1f;
+    private float speed = 0.2f;
     private float halfWidth = 3.3f;
 
     public Object energyBall;
     public Object barrier;
-    public bool barrierState, ballState;
+    public bool barrierState, ballState, canShoot = false;
 
     private GameObject ball, bar;
 
-    public Text scoreText;
+    public Text scoreText, comboText;
     public int score;
 
     public Slider energySlider;
     public int energy = 100;
+
+    public int combo = 1;
+    public int maxCombo = 5;
 
     // Use this for initialization
     void Start () {
@@ -53,24 +56,56 @@ public class Player : MonoBehaviour {
             barrierState = false;
         }
 
-        if (!ballState && Input.GetAxis("Vertical") > 0 && energy >= 20) {
-            ball = (GameObject) Instantiate(energyBall, new Vector2(this.transform.position.x, this.transform.position.y + .5f), Quaternion.identity);
+        if (canShoot && Input.GetAxis("Vertical") > 0 && energy >= 25) {
+            if(ballState) Destroy(ball);
+            ball = (GameObject)Instantiate(energyBall, new Vector2(this.transform.position.x, this.transform.position.y + .5f), Quaternion.identity);
             ballState = true;
-            energy -= 20;
+            energy -= 25;
+            canShoot = false;
+            combo = 1;
         }
+
+        if (Input.GetAxis("Vertical") <= 0) canShoot = true;
 
         //Actualiza la barra de energia
         energySlider.value = energy;
 
+        switch (combo) {
+            case 1:
+                comboText.fontSize = 16;
+                comboText.color = new Color(1.0f, 1.0f, 1.0f);
+                break;
+            case 2:
+                comboText.fontSize = 20;
+                comboText.color = new Color(1.0f, 0.96f, 0.75f);
+                break;
+            case 3:
+                comboText.fontSize = 24;
+                comboText.color = new Color(1.0f, 0.92f, 0.5f);
+                break;
+            case 4:
+                comboText.fontSize = 28;
+                comboText.color = new Color(1.0f, 0.88f, 0.25f);
+                break;
+            case 5:
+                comboText.fontSize = 32;
+                comboText.color = new Color(1.0f, 0.84f, 0.0f);
+                break;
+        }
         scoreText.text = score.ToString();
+        comboText.text = "X " + combo.ToString();
 
-        if(energy < 20 && !ballState) SceneManager.LoadScene("Menu");
+        if (energy < 25 && !ballState) SceneManager.LoadScene("Menu");
 
     }
 
     IEnumerator BarrierTimer() {
         yield return new WaitForSeconds(1);
-        energy--;
+        if (energy - 5 > 0) {
+            energy -= 5;
+        } else {
+            energy = 0;
+        }
         if (barrierState) {
             StartCoroutine(BarrierTimer());
         } else {
